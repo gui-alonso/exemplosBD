@@ -42,3 +42,20 @@ INSERT INTO pedidos (cliente_id, produto_id, quantidade) VALUES
 (3, 3, 1);
 
 
+SELECT c.nome AS cliente, SUM(p.preco * pe.quantidade) AS total_vendas
+FROM clientes c
+LEFT JOIN pedidos pe ON c.id = pe.cliente_id
+LEFT JOIN produtos p ON pe.produto_id = p.id
+GROUP BY c.nome
+ORDER BY total_vendas DESC;
+
+SELECT p.nome AS produto, SUM(pe.quantidade) AS total_vendido
+FROM produtos p
+LEFT JOIN pedidos pe ON p.id = pe.produto_id
+GROUP BY p.nome
+ORDER BY total_vendido DESC;
+
+SELECT c.nome AS cliente, p.nome AS produto, pe.quantidade
+FROM pedidos pe
+INNER JOIN clientes c ON pe.cliente_id = c.id
+INNER JOIN produtos p ON pe.produto_id = p.id;
